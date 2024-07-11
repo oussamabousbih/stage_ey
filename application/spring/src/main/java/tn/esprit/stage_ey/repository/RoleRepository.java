@@ -1,0 +1,11 @@
+package tn.esprit.stage_ey.repository;
+
+import tn.esprit.stage_ey.Entities.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface RoleRepository extends JpaRepository<Role,Long> {
+    Role findByName(String name);
+
+}

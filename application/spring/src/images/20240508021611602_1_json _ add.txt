@@ -1,0 +1,48 @@
+foyer 
+
+{
+        "idFoyer": 3,
+        "nomFoyer": "foyer1",
+        "capaciteFoyer": 522,
+/*"blocs": [
+      {
+        "idBloc": 201,
+        "name": "Bloc A"
+        // Include other Bloc properties as needed
+      },
+      {
+        "idBloc": 202,
+        "name": "Bloc B"
+        // Include other Bloc properties as needed
+      },
+      {
+        "idBloc": 203,
+        "name": "Bloc C"
+        // Include other Bloc properties as needed
+      }
+      // Include more Bloc objects as needed
+    ],
+        "u": null*/
+ }
+
+
+Universite 
+
+{
+    "nomUniversite": "University",
+    "adresse": "123 University Street",
+    "f": {
+        "idFoyer": 3
+    }
+}
+
+
+Bloc
+
+{
+    "nomBloc": "bloc4",
+    "capaciteBloc": 100,
+    "f1": {
+        "idFoyer": 3
+    }
+}
