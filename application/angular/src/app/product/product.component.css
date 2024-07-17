@@ -1,0 +1,44 @@
+/* product-detail.component.css */
+
+.container {
+  padding-top: 20px;
+}
+
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.btn {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+/* product.component.css */
+
+/* Optional: Ensure pagination controls are centered and have adequate spacing */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+/* Optional: Ensure pagination controls are centered and have adequate spacing */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

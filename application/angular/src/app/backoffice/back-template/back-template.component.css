@@ -1,0 +1,6 @@
+.rounded-image {
+  max-width: 100px; /* Adjust the maximum width as needed */
+  max-height: 100px; /* Adjust the maximum height as needed */
+  border-radius: 50%; /* Makes the image round */
+  overflow: hidden; /* Ensures the image stays within the rounded border */
+}

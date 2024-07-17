@@ -1,0 +1,63 @@
+<h1>List Products</h1>
+<button class="btn btn-primary" type="button" (click)="navigatetoaddproduct()"  >Add new Product</button>
+<div class="row">
+
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="searchedProduct">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" (click)="searchProducts(searchedProduct)">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Image</th>
+        <th>description</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products| paginate: { itemsPerPage: pageSize, currentPage: currentPage }; let i=index">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}$</td>
+        <td>{{ product.category.name }}</td>
+        <td><img
+          *ngIf="productImages[product.id]"
+          [src]="productImages[product.id]"
+          alt="Product Image"
+          class="img-thumbnail"
+          style="max-width: 100px;"
+        ></td>
+
+        <td>{{ product.description }}</td>
+        <!-- Adjust to match your data structure -->
+        <td>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-danger" (click)="deleteProduct(product.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/backtemplate/updateproduct']" [queryParams]="{ id: product.id }">
+              <i class="fas fa-edit"></i> Update
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="d-flex justify-content-center mt-4">
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

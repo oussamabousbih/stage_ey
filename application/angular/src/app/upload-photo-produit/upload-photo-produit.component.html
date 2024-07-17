@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Product Image</title>
+  <!-- Add any necessary CSS links here -->
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <h1>Choose Your Product Image</h1>
+    <div class="col-md-6">
+      <!-- Input for selecting a file -->
+      <input type="file" (change)="onFileChanged($event)">
+    </div>
+    <div class="col-md-6">
+      <!-- Button to trigger upload -->
+      <input type="button" value="Upload" (click)="onUpload()">
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+

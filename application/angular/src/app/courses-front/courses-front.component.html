@@ -1,0 +1,77 @@
+<section class="blog_section layout_padding">
+
+  <div class="container">
+    <div class="heading_container">
+      <h2>Latest Modules</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mx-auto" *ngFor="let module of modules; let i = index">
+        <div class="box">
+          <div class="img-box">
+            <div class="img-box">
+              <img *ngIf="i === 0" src="assets/img/gif2.gif" alt="Module GIF" width="300" height="300">
+              <img *ngIf="i === 1" src="assets/img/gif3.gif" alt="Module GIF" width="300" height="300">
+              <img *ngIf="i === 2" src="assets/img/gif1.gif" alt="Module GIF" width="300" height="300">
+            </div>
+          </div>
+          <div class="detail-box">
+            <h5>{{ module.moduleName }}</h5>
+            <p>{{ module.description }}</p>
+            <a (click)="showCoursesPopup($event, module)">Courses</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popup" *ngIf="showPopup">
+    <div class="popup-content">
+      <span class="close" (click)="closePopup()">&times;</span>
+      <h2>Courses</h2>
+      <button class="add-course-btn" (click)="openAddCoursePopup()">Add Course</button>
+      <div *ngIf="selectedModule">
+        <div *ngFor="let course of selectedModule.courses | paginate: { itemsPerPage: pageSize, currentPage: currentPage }" class="course-details">
+          <p><strong>Course Name:</strong> {{ course.courseName }}</p>
+          <p><strong>Attachment:</strong> <a [href]="getFileUrl(course.attachmentFileName)" target="_blank">{{ course.attachmentFileName }}</a></p>
+          <button (click)="previewFile(getFileUrl(course.attachmentFileName))" class="btn btn-primary btn-preview">Preview</button>
+        </div>
+      </div>
+      <br>
+      <div class="pagination-container">
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <div class="popup" *ngIf="showAddCoursePopup">
+    <div class="popup-content">
+      <span class="close" (click)="closeAddCoursePopup()">&times;</span>
+      <h2>Add Course</h2>
+      <div class="col-md-6 offset-md-3">
+        <form (ngSubmit)="onSubmit()" #courseForm="ngForm">
+          <div class="form-group">
+            <label>Course Name</label>
+            <input type="text" class="form-control" [(ngModel)]="course.courseName" name="courseName" required>
+          </div>
+
+          <div class="form-group">
+            <label>Course Code</label>
+            <input type="text" class="form-control" [(ngModel)]="course.courseCode" name="courseCode" required>
+          </div>
+
+          <div class="form-group">
+            <label>Module</label>
+            <select class="form-control" [(ngModel)]="course.module.moduleId" name="moduleId" required>
+              <option *ngFor="let module of modules" [value]="module.moduleId">{{ module.moduleName }}</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <input type="file" (change)="onFileSelected($event)" name="file" required>
+          </div>
+
+          <button class="btn btn-success" type="submit" [disabled]="!courseForm.valid"   >Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

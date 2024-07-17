@@ -1,0 +1,19 @@
+<div class="col-md-6 offset-md-3">
+    <h3> Update Module </h3>
+    <form (ngSubmit) = "onSubmit()">
+        <input type="hidden" [(ngModel)]="module.moduleId" name="moduleId">
+        <div class="form-group">
+            <label>Module Name</label>
+            <input type="text" class="form-control" id="moduleName"
+                [(ngModel)] = "module.moduleName" name="moduleName">
+        </div>
+    
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" id="description"
+                [(ngModel)] = "module.description" name="description">
+        </div>
+    
+        <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+    </div>

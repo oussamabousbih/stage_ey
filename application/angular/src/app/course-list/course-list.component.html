@@ -1,0 +1,29 @@
+<div class="mb-4">
+  <a routerLink="/backtemplate/create-course" routerLinkActive="active" class="btn btn-primary">Add Course</a>
+</div>
+<h2>Courses List</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Course Name</th>
+    <th>Course Code</th>
+    <th>Module</th>
+    <th>Attachment</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let course of courses">
+    <td>{{ course.courseName }}</td>
+    <td>{{ course.courseCode }}</td>
+    <td>{{ course.module.moduleName }}</td>
+    <td>
+      <a [href]="getFileUrl(course.attachmentFileName)" target="_blank">{{ course.attachmentFileName }}</a>
+    </td>
+    <td>
+      <button (click) = "updateCourse(course.courseId)" class="btn btn-info" style="margin-left: 10px">Update</button>
+      <button (click) = "deleteCourse(course.courseId)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

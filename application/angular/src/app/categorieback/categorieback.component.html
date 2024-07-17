@@ -1,0 +1,44 @@
+<h1>List Category</h1>
+<button class="btn btn-primary" type="button" (click)="navigateToAddCategory()">Add new Category</button>
+<div class="row">
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="searchedCategory">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" (click)="searchCategories(searchedCategory)">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of category; let i=index">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+
+        <td>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-danger" (click)="deleteCategory(category.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/backtemplate/updatecategory']" [queryParams]="{ id: category.id }">
+              <i class="fas fa-edit"></i> Update
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

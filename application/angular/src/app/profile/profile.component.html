@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> </title>
+  <!-- Add any necessary CSS links here -->
+
+</head>
+<body>
+<div class="container">
+  <h1>Welcome {{ user.name }}</h1>
+  <div class="profile-info">
+    <img   [src]="retrievedImage" alt="Profile Picture">
+    <div class="container row">
+      <div class="col-md-6">
+
+        <input type="file" (change)="onFileChanged($event)">
+      </div>
+      <div class="col-md-6">
+        <input type="button" (click)="onUpload()" value="upload">
+
+      </div>
+    </div>
+    <hr />
+
+
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p  *ngFor="let role of user.roles"><strong>Role:</strong>{{ role.name }}</p>
+    <!-- Add more profile information as needed -->
+  </div>
+</div>
+</body>
+</html>
+
+

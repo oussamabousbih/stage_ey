@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> </title>
+  <!-- Add any necessary CSS links here -->
+
+</head>
+<body>
+
+<div class="container">
+<div class="container row">
+  <h1>Choose your Profile Image</h1>
+  <div class="col-md-6">
+
+
+    <input type="file" (change)="onFileChanged($event)">
+  </div>
+  <div class="col-md-6">
+    <input type="button" (click)="onUpload()" value="upload">
+  </div>
+
+</div>
+</div>
+</body>
+</html>

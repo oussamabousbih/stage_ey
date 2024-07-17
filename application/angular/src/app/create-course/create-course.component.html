@@ -1,0 +1,38 @@
+<div class="col-md-6 offset-md-3">
+  <h3>Create Course</h3>
+  <form (ngSubmit)="onSubmit()" #moduleForm="ngForm">
+    <div class="form-group">
+      <label>Course Name</label>
+      <input type="text" class="form-control" [(ngModel)]="course.courseName" name="courseName">
+    </div>
+
+    <div class="form-group">
+      <label>Course Code</label>
+      <input type="text" class="form-control" [(ngModel)]="course.courseCode" name="courseCode">
+    </div>
+
+    <div class="form-group">
+      <label>Module</label>
+      <select class="form-control" [(ngModel)]="course.module.moduleId" name="moduleId">
+        <option *ngFor="let module of modules; let i = index" [value]="module.moduleId" [selected]="i === 0">{{ module.moduleName }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="file" (change)="onFileSelected($event)" name="file">
+    </div>
+
+    <form [formGroup]="aFormGroup">
+      <ngx-recaptcha2 #captchaElem
+                      [siteKey]="siteKey"
+                      formControlName="recaptcha">
+      </ngx-recaptcha2>
+    </form>
+
+    <br>
+
+    <button class="btn btn-success" type="submit" [disabled]="!moduleForm.valid || aFormGroup.invalid">Submit</button>
+  </form>
+
+
+</div>

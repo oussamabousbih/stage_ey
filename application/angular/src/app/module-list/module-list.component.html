@@ -1,0 +1,24 @@
+<div class="mb-4">
+  <a routerLink="/backtemplate/create-module" routerLinkActive="active" class="btn btn-primary">Add Module</a>
+</div>
+<h2>Modules List</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let module of modules">
+      <td>{{ module.moduleName }}</td>
+      <td>{{ module.description }}</td>
+      <td>
+          <button (click) = "updateModule(module.moduleId)" class="btn btn-info">Update</button>
+          <button (click) = "deleteModule(module.moduleId)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

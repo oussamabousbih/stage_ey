@@ -1,0 +1,65 @@
+<div class="container">
+
+
+  <h1>UpdateUser</h1>
+  <form #f="ngForm"> <!--2eme methode-->
+    <!--
+        <form #f="ngForm" (ngSubmit)="save(f)"> /// methode
+    -->
+    <div>
+      <label>Name</label>
+      <input type="text"  name="name" class="form-control"[(ngModel)]="user.name" ngModel #n="ngModel" required  minlength="3">
+    </div>
+    <div class=" alert alert-danger" *ngIf="n.invalid && n.touched  ">
+      the name is a required feild !
+    </div>
+    <div class=" alert alert-danger" *ngIf="n.errors?.['minlength'] ">
+      the name should be at least 3 caracteres
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="text"  name="email" class="form-control" [(ngModel)]="user.email"  required ngModel #e="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+    </div>
+    <div class=" alert alert-danger" *ngIf="e.invalid && e.touched">
+      <div *ngIf="e.errors?.['required']">the email is a required feild !</div>
+      <div *ngIf="e.errors?.['pattern']">PUT a valid  email !</div>
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password"  name="password" class="form-control" [(ngModel)]="user.password" ngModel #p="ngModel" required>
+    </div>
+    <div class=" alert alert-danger" *ngIf="p.invalid && p.touched">
+      the password is a required feild !
+    </div>
+    <div>
+      <label for="roles">Roles:</label>
+      <div class="form-check" *ngFor="let role of roles">
+        <input class="form-check-input" type="checkbox" id="role{{ role.id }}" [value]="role" (change)="toggleRoleSelection(role)" name="roles">
+        <label class="form-check-label" for="role{{ role.id }}">
+          {{ role.name }}
+        </label>
+      </div>
+      <div class="selected-roles">
+    <span *ngFor="let role of selectedRoles" class="selected-role">
+      {{ role.name }} <i class="fas fa-check"></i>
+    </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-success" [disabled]="f.invalid"  type="submit" (click)="updateUser()">Save</button>
+          <button class="btn btn-success"  type="submit" (click)="navigate()">Back</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf=" updateSuccess==true" class="alert alert-success">
+      Update successful!
+    </div>
+  </form>
+
+
+
+</div>
+

@@ -1,0 +1,47 @@
+.user-image {
+  width: 40px; /* Adjust to your desired width */
+  height: 40px; /* Adjust to your desired height */
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.category-icon {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.categories {
+  display: none;
+  position: absolute;
+  top: 70%; /* Position below the input field */
+  left: 20%;
+  right: 20%;
+  background-color: white;
+  border: 1px solid #b3e4ec;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 10; /* Ensure the dropdown appears above other elements */
+}
+
+.categories ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories li {
+  padding: 5px 0;
+}
+
+.categories li:hover {
+  background-color: #b3e4ec;
+}
+
+.categories.show {
+  display: block;
+}

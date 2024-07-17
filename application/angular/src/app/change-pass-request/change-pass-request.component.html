@@ -1,0 +1,33 @@
+<!-- Your login form component -->
+<div class="container">
+  <h1>Change Password Form</h1>
+  <form #f="ngForm" class="change-password-form">
+    <div class="form-group">
+      <label>New Password</label>
+      <input type="password" name="password" class="form-control" [(ngModel)]="passrequest.newPassword" ngModel #p1="ngModel" required>
+    </div>
+    <div class="alert alert-danger" *ngIf="p1.invalid && p1.touched">
+      The password is a required field !!
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" name="confirmationPassword" class="form-control" [(ngModel)]="passrequest.confirmationPassword" ngModel #p2="ngModel" required>
+    </div>
+    <div class="alert alert-danger" *ngIf="p2.invalid && p2.touched">
+      The password is a required field !!
+    </div>
+    <div class="alert alert-danger" *ngIf="passrequest.newPassword != passrequest.confirmationPassword">
+      The two passwords are not the same !!
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-success" [disabled]="f.invalid" type="submit" (click)="changepass()">Save</button>
+          <div class="alert alert-success" *ngIf="passwordChanged">Password Changed Successfully !! </div>
+          <button class="btn btn-success" type="submit" (click)="navigate()">Login</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

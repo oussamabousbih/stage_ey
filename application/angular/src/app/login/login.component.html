@@ -1,0 +1,53 @@
+<div *ngIf="!isLoggedIn">
+  <!-- Your login form component -->
+
+<div class="container">
+
+
+  <h1>Login Form</h1>
+  <form #f="ngForm" > <!--2eme methode-->
+    <!--
+        <form #f="ngForm" (ngSubmit)="save(f)"> /// methode
+    -->
+    <div>
+      <label>Email</label>
+      <input type="string"  name="email" class="form-control" [(ngModel)]="loginrequest.email"  required ngModel #e="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+    </div>
+    <div class=" alert alert-danger" *ngIf="e.invalid && e.touched">
+      <div *ngIf="e.errors?.['required']">the email is a required feild !</div>
+      <div *ngIf="e.errors?.['pattern']">PUT a valid  email !</div>
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password"  name="password" class="form-control" [(ngModel)]="loginrequest.password" ngModel #p="ngModel" required>
+    </div>
+    <div class=" alert alert-danger" *ngIf="p.invalid && p.touched">
+      the password is a required feild !
+    </div>
+    <div class="alert alert-danger" *ngIf="passwordIncorrect&& !passwordChange">
+      Incorrect password! Please try again.
+    </div>
+    <div class="alert alert-danger" *ngIf="passwordChange&& !EmailSent"  >
+      Do you want to change your password ?
+    </div>
+    <div class="alert alert-success" *ngIf="EmailSent" >Email sent succeffuly !</div>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-success" [disabled]="f.invalid " type="submit" (click)="login()">Save</button>
+
+          <button class="btn btn-success" *ngIf="passwordChange" (click)="changePasswordRequest(loginrequest.email)">Change Password</button>
+
+          <button class="btn btn-success" type="submit" (click)="navigate()">SignUp</button>
+        </div>
+      </div>
+    </div>
+    <!--<app-front-template [userState]="userState" ></app-front-template>-->
+
+  </form>
+
+
+</div>
+
+</div>
+<router-outlet></router-outlet>
