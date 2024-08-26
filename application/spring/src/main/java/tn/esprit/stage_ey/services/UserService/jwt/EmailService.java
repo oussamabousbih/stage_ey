@@ -10,7 +10,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import tn.esprit.stage_ey.Entities.CartItem;
+import org.thymeleaf.context.Context;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,8 +24,9 @@ import java.util.regex.Pattern;
 @Slf4j
 @RequiredArgsConstructor
 public class EmailService implements EmailSender {
-
+    private final TemplateEngine templateEngine;
       private final static Logger LOGGER = LoggerFactory
+
               .getLogger(EmailService.class);
     private final JavaMailSender mailSender;
     // Generate a unique token (UUID)
@@ -41,7 +46,7 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom("Ghostech@gmail.com");
+            helper.setFrom("Tunizon@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("Failed to send email", e);
@@ -64,6 +69,22 @@ public class EmailService implements EmailSender {
 
         // Send email to the user's email address
         send(userEmail, emailContent);
+    }
+    public void sendCartItemsEmail(String to, List<CartItem> cartItems, double totalPrice, String contactNumber) throws MessagingException {
+        Context context = new Context();
+        context.setVariable("cartItems", cartItems);
+        context.setVariable("totalPrice", totalPrice);
+        context.setVariable("contactNumber", contactNumber);
+
+        String htmlContent = templateEngine.process("cartEmailTemplate", context);
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        helper.setTo(to);
+        helper.setSubject("Your Cart Items");
+        helper.setText(htmlContent, true);
+
+        mailSender.send(mimeMessage);
     }
 }
 

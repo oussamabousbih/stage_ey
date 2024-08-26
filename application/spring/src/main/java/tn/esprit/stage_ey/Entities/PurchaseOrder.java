@@ -20,9 +20,12 @@ public class PurchaseOrder {
 
     private Date orderDate;
 
-    @ManyToOne
+    private Double prix;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private AppUser users;
 
-    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
-    private List<OrderItem> items;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Product>  products;
 }

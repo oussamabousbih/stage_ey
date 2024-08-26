@@ -17,12 +17,5 @@ public class OrderItem {
     private int quantity;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private PurchaseOrder purchaseOrder;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Product product;
-
-
 
 }

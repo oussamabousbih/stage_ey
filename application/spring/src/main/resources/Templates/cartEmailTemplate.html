@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cart Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h3 {
+            color: #007bff;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .total-price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .contact-number {
+            font-size: 1.1em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<h3>Hello,</h3>
+<p>Here are the products you chose and their prices:</p>
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+        <td th:text="${item.productt.name}">Product Name</td>
+        <td th:text="${item.quantity}">Quantity</td>
+        <td th:text="${item.productt.price * item.quantity}">Price</td>
+    </tr>
+    </tbody>
+</table>
+<p class="total-price">Total Price: <span th:text="${totalPrice}"></span></p>
+<p class="contact-number">Contact Number: <span th:text="${contactNumber}"></span></p>
+</body>
+</html>

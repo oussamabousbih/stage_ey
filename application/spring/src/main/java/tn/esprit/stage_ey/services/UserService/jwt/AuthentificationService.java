@@ -3,6 +3,7 @@ package tn.esprit.stage_ey.services.UserService.jwt;
 
 import jakarta.annotation.PostConstruct;
 import tn.esprit.stage_ey.Entities.AppUser;
+import tn.esprit.stage_ey.Entities.Cart;
 import tn.esprit.stage_ey.Entities.Role;
 import tn.esprit.stage_ey.dto.SignUpRequest;
 import tn.esprit.stage_ey.repository.AppUserRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tn.esprit.stage_ey.repository.CartRepo;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -23,6 +25,7 @@ public class AuthentificationService implements  AuthService {
 
    private  final PasswordEncoder passwordEncoder;
    private final RoleService roleService;
+   private final CartRepo cartRepo;
 
 
 
@@ -35,7 +38,7 @@ public class AuthentificationService implements  AuthService {
 
        }
         AppUser a = new AppUser();
-
+        Cart c = new Cart();
         BeanUtils.copyProperties(signUpRequest, a);
 
        String HashPassword= passwordEncoder.encode(signUpRequest.getPassword());
@@ -73,9 +76,11 @@ public class AuthentificationService implements  AuthService {
 
 
 
+        c.setUser(a);
 
         a.setRoles(rolesToAdd);
        appUserRepository.save(a);
+        cartRepo.save(c);
        return  true;
     }
 

@@ -1,4 +1,6 @@
 package tn.esprit.stage_ey.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,8 +25,5 @@ public class CartItem {
     @ManyToOne
     private Cart cartt;
 
-
-
-    // Getters and setters
 }
 

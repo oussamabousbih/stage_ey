@@ -1,13 +1,18 @@
 package tn.esprit.stage_ey.controllers.UserController;
 
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import tn.esprit.stage_ey.Entities.AppUser;
 import tn.esprit.stage_ey.Entities.ImageModel;
+import tn.esprit.stage_ey.Entities.Product;
 import tn.esprit.stage_ey.dto.loginRequest;
 import tn.esprit.stage_ey.dto.loginResponse;
 import tn.esprit.stage_ey.repository.AppUserRepository;
 import tn.esprit.stage_ey.repository.ImageModelRepository;
+import tn.esprit.stage_ey.repository.ProductRepo;
 import tn.esprit.stage_ey.repository.RoleRepository;
+import tn.esprit.stage_ey.services.Produit_Categorie.IProduitService;
 import tn.esprit.stage_ey.services.UserService.jwt.AppUserService;
 import tn.esprit.stage_ey.services.UserService.jwt.loaduser;
 import tn.esprit.stage_ey.utilis.JwtUtil;
@@ -51,7 +56,8 @@ private final ImageModelRepository imageRepository;
 private final AppUserService appUserServic;
 private final AppUserRepository appUserRepository;
 private final PasswordEncoder passwordEncoder;
-private final RoleRepository roleRepository;
+private final ProductRepo productRepo;
+private final IProduitService productService;
 
     @PostMapping("/login")
     public ResponseEntity<loginResponse> login(@RequestBody loginRequest loginRequest){
@@ -116,6 +122,27 @@ private final RoleRepository roleRepository;
 
         return ResponseEntity.status(HttpStatus.OK);
     }
+   /* @PostMapping("/upload-imagep")
+    public ResponseEntity.BodyBuilder uplaodImagep(@RequestParam("imageFile") MultipartFile file, @RequestBody Product product) throws IOException {
+
+        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+                compressBytes(file.getBytes()));
+        imageRepository.save(img);
+        product.setImage(img);
+        productService.addproduit(product);
+        productRepo.save(product);
+
+        return ResponseEntity.status(HttpStatus.OK);
+    }*/
+    @PostMapping("/upload-imagep/{productId}")
+    public ResponseEntity.BodyBuilder uploadImage(@RequestParam("imageFile") MultipartFile file, @PathVariable("productId") Long productId) throws IOException {
+        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(), compressBytes(file.getBytes()));
+        imageRepository.save(img);
+        productService.assignImageToProduct(img.getId(), productId);
+        return ResponseEntity.status(HttpStatus.OK);
+    }
 
     @GetMapping(path = { "/getimage/{imageName}" })
     public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
@@ -125,6 +152,37 @@ private final RoleRepository roleRepository;
                 decompressBytes(retrievedImage.getPicByte()));
         return img;
     }
+
+    @GetMapping("/getimagep/{productId}")
+    public ResponseEntity<byte[]> getImagep(@PathVariable("productId") Long productId) {
+        // Assuming imageRepository is your repository interface for ImageModel
+        Optional<Product> optionalProduct = productRepo.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+
+            // Assuming product.getImage() retrieves the associated ImageModel
+            ImageModel imageModel = product.getImage();
+
+            if (imageModel != null) {
+                // Decompress the picByte data if needed (assuming decompressBytes method is defined)
+                byte[] picBytes = decompressBytes(imageModel.getPicByte());
+
+                // Set response headers
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.valueOf(imageModel.getType()));
+                headers.setContentLength(picBytes.length);
+                headers.setContentDispositionFormData("attachment", imageModel.getName());
+
+                return new ResponseEntity<>(picBytes, headers, HttpStatus.OK);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // compress the image bytes before storing it in the database
     public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();

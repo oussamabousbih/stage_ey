@@ -1,4 +1,5 @@
 package tn.esprit.stage_ey.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +18,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private AppUser user;
 
     @OneToMany(mappedBy = "cartt", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<CartItem> items;
 
     // Getters and setters

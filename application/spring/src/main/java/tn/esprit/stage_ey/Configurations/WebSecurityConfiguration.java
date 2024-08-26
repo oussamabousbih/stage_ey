@@ -2,6 +2,7 @@ package tn.esprit.stage_ey.Configurations;
 
 
 
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import tn.esprit.stage_ey.filters.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -47,10 +48,14 @@ public class WebSecurityConfiguration {
                 .csrf().disable()// Cross-Site Request Forgery (CSRF) protection by default.
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/signup", "/login","/email/changePassword","/email/password-reset-request",
-                                        "/course/**","/module/**","/email/getconnecteduser","/Projet/**","/websocket/**",
-                                        "/ProjetDetail/**","/comment/**","/error/**","/image/**","/entreprise/**",
-                                        "/stage/**","/Club/**","/Event/**","/gigs/**" , "files/**").permitAll()
+                                .requestMatchers("/signup", "/login",
+                                        "/email/changePassword"
+                                        ,"/email/password-reset-request",
+                                        "/email/getconnecteduser",
+                                        "/upload-imagep/{productId}"
+                                        ,"getimagep/{productId}"
+                                        ,"/product/**","/category/**",
+                                        "/cartitem/**","/cart/**").permitAll()
 
                                 .requestMatchers("/roles/get","/login/role","/change/pass"
                                         ,"/change/change-current-pass","/getconnecteduser/{id}"
@@ -58,8 +63,10 @@ public class WebSecurityConfiguration {
 
                                 .requestMatchers("/user/**").hasAuthority("ROLE_admin")
                                 .anyRequest().authenticated())
+
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

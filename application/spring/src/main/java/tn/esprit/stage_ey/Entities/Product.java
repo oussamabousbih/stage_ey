@@ -1,9 +1,13 @@
 package tn.esprit.stage_ey.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,13 +20,14 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
 
-    @OneToOne
-    ImageModel image;
+        @OneToOne(cascade = CascadeType.ALL)
+        private ImageModel image;
 
-    // Getters and setters
-}
+        // Getters and setters
+    }

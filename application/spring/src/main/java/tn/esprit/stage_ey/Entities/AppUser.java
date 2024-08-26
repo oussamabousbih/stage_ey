@@ -1,6 +1,7 @@
 package tn.esprit.stage_ey.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,10 +40,11 @@ public class AppUser  {
     @OrderColumn(name="id")
     private Set<Role> roles =new HashSet<>();//is a collection that does not allow duplicate elements
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Cart cart;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users")
+    @JsonIgnore
     private List<PurchaseOrder> purchaseOrders;
 
 

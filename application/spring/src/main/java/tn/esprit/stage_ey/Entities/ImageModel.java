@@ -26,6 +26,9 @@ public class ImageModel {
     @Column(name = "pic_byte", columnDefinition = "LONGBLOB")
     private byte[] picByte;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Product product;
+
     public ImageModel(String name, String type, byte[] picByte) {
         this.name = name;
         this.type = type;
