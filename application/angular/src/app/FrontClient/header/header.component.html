@@ -36,7 +36,7 @@
             </li>
             <li class="nav-item">
               <div class="category-container" (mouseover)="showCategories()" (mouseout)="hideCategories()">
-                <a class="nav-link" (click)="navigatetoProducts()">Categories</a>
+                <a class="nav-link" (click)="navigatetoProducts()">Products</a>
                 <div class="categories" [ngClass]="{'show': showCat}" id="categories">
                   <ul>
                     <li *ngFor="let category of categories" (click)="navigateToCategory(category.id)">{{ category.name }}</li>
@@ -46,21 +46,23 @@
             </li>
           </ul>
         </div>
-
-
+        <div>
         <div *ngIf="profileOff">
-          <div class="quote_btn-container">
             <a (click)="navigate()">
               <span>Login</span>
             </a>
           </div>
         </div>
-
+        <div class="quote_btn-container mx-3">
+          <img class=" cart-image" (click)="navigateto()" src="assets/img/icone-de-panier-orange.png" alt="Image">
+        </div>
         <div *ngIf="this.serviceUser.getConnectedUserObject() && !profileOff ">
           <div class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<!--
               <span class="mr-2 d-none d-lg-inline text-gray-600 small" >{{this.user?.name}}</span>
+-->
               <img class="img-profile rounded-circle user-image"
                    *ngIf="this.user?.image===null&& this.serviceUser.getConnectedUserObject()" src="assets/img/user.png"
                    alt="Image">

@@ -39,15 +39,8 @@ export class BackTemplateComponent implements OnInit{
 
   }
   getImage(imagename :string) {
-    const token = localStorage.getItem('token'); // Retrieve token from storage
 
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8080/getimage/' + imagename,{headers})
+    this.service.loadImage(imagename)
       .subscribe(res => {
 
           this.retrieveResonse = res;

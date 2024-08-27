@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {query} from "@angular/animations";
 import {ServiceUsersService} from "../../Services/UserService/service-users.service";
@@ -12,7 +12,7 @@ import {Category} from "../../Entity/Category";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent  implements OnInit{
   profileOff:boolean=true;
   navigatetrue:boolean=true;
   user:User|null=null;
@@ -25,25 +25,15 @@ export class HeaderComponent {
   showCat: boolean = false;
 
   categories:Category[]=[]
+  private cartuser: number;
   constructor(private route:Router , private routes : ActivatedRoute
               , protected serviceUser : GetconnecteduseridService
               , private httpClient :HttpClient
-                ,private catservice:ProduitCatServicesService) {
+                ,private catservice:ProduitCatServicesService
+                , private service:ServiceUsersService) {
 
 
   }
-
-  navigate(){
-    this.route.navigateByUrl("/login");
-  }
-  navigateto(){
-    this.route.navigateByUrl("/frontClient/login");
-  }
-  navigatetoProducts(){
-    this.route.navigate(['/frontClient/product'], { queryParams: { navigatetrue:this.navigatetrue  } });
-    this.navigatetrue=false;
-  }
-
 
   ngOnInit(): void {
 this.catservice.getAllCategories().subscribe(categ=>{
@@ -61,10 +51,24 @@ this.catservice.getAllCategories().subscribe(categ=>{
     this.serviceUser.getConnectedUserObject().subscribe((u)=>{
       this.user=u;
       this.imageName=u.image.name;
+      this.cartuser=u.id
       this.getImage(this.imageName);
     });
 
   }
+
+  navigate(){
+    this.route.navigateByUrl("/login");
+  }
+  navigateto(){
+    this.route.navigate(['/frontClient/cart'], { queryParams: { iduser:this.cartuser  } });
+
+  }
+  navigatetoProducts(){
+    this.route.navigate(['/frontClient/product'], { queryParams: { navigatetrue:this.navigatetrue  } });
+    this.navigatetrue=false;
+  }
+
   logout() {
     localStorage.setItem('token','');
     this.route.navigateByUrl("");
@@ -72,16 +76,8 @@ this.catservice.getAllCategories().subscribe(categ=>{
 
   }
   getImage(imagename :string) {
-    const token = localStorage.getItem('token'); // Retrieve token from storage
-
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8080/getimage/' + imagename,{headers})
-      .subscribe(res => {
+  this.service.loadImage(imagename).
+  subscribe(res => {
 
           this.retrieveResonse = res;
           this.base64Data = this.retrieveResonse.picByte;

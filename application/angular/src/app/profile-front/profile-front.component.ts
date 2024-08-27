@@ -19,7 +19,8 @@ export class ProfileFrontComponent implements OnInit{
   user!:User;
   id!:number;
 
-  constructor(public service:GetconnecteduseridService,private httpClient :HttpClient) {
+  constructor(public service:GetconnecteduseridService,private httpClient :HttpClient,
+  private serviceuser:ServiceUsersService) {
 
 
   }
@@ -35,15 +36,7 @@ this.service.getConnectedUserObject().subscribe((u:any) => {
 
   //Gets called when the user clicks on retieve image button to get the image from back end
   getImage(imagename :string) {
-    const token = localStorage.getItem('token'); // Retrieve token from storage
-
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8080/getimage/' + imagename,{headers})
+    this.serviceuser.loadImage(imagename)
       .subscribe(res => {
 
           this.retrieveResonse = res;

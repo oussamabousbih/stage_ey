@@ -33,13 +33,6 @@ product!:Product
     return this.http.get(`${this.apiUrl}/product`);
   }
 
-  getAllProduct(page: number, itemsPerPage: number) {
-    const params = {
-      page: page.toString(),
-      size: itemsPerPage.toString()
-    };
-    return this.http.get<{ products: any[], totalPages: number }>(`${this.apiUrl}/product`, { params });
-  }
 
   // Delete a product by ID
   deleteProduct(id: number): Observable<void> {

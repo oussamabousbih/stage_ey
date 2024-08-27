@@ -66,9 +66,10 @@
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="mr-2 d-none d-lg-inline text-gray-600 small" [ngModel]="user.name">{{user.name}}</span>
-
-            <img class="img-profile rounded-circle"
-          [src]="retrievedImage" alt="Image">
+            <img class="img-profile rounded-circle user-image"
+                 *ngIf="this.user?.image===null" src="assets/img/user.png"
+                 alt="Image">
+            <img class="img-profile rounded-circle user-image" *ngIf="this.user?.image!==null" [src]="retrievedImage" alt="Image">
           </a>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -98,13 +99,7 @@
   <!-- End of Main Content -->
 
   <!-- Footer -->
-  <footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-      <div class="copyright text-center my-auto">
-        <span>All rights researved by Ghodstech </span>
-      </div>
-    </div>
-  </footer>
+
   <!-- End of Footer -->
 
 </div>
@@ -137,5 +132,13 @@
     </div>
   </div>
 </div>
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>All rights researved by Tunizon </span>
+      </div>
+    </div>
+  </footer>
 </div>
 </div>
+

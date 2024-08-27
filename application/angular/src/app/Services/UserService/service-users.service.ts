@@ -69,7 +69,27 @@ export class ServiceUsersService {
     const requestBody = { email };
     return this.http.post(`${this.apiUrl}/email/password-reset-request`, requestBody);
   }
+  loadImage(imagename:any){
+    const token = localStorage.getItem('token'); // Retrieve token from storage
 
+    if (!token) {
+      throw new Error('No token found in local storage.');
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    //Make a call to Sprinf Boot to get the Image Bytes.
+    return this.http.get(`${this.apiUrl}/getimage/` + imagename,{headers})
+  }
+  uploadimage(uploadImageData:any){
+    const token = localStorage.getItem('token'); // Retrieve token from storage
+
+    if (!token) {
+      throw new Error('No token found in local storage.');
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}/upload-image`, uploadImageData,{headers})
+  }
 
   getUserById(id:number){
 

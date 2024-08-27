@@ -34,13 +34,7 @@ export class ProfileSettingComponent implements OnInit{
 
 
   onUpload() {
-    const token = localStorage.getItem('token'); // Retrieve token from storage
 
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     // Assuming the endpoint returns the URL of the uploaded image
     console.log(this.selectedFile);
 
@@ -49,8 +43,8 @@ export class ProfileSettingComponent implements OnInit{
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     //Make a call to the Spring Boot Application to save the image
 
-    this.httpClient.post('http://localhost:8080/upload-image', uploadImageData,{headers})
-      .subscribe((response:any) => {
+        this.services.uploadimage(uploadImageData)
+          .subscribe((response:any) => {
           if (response.status === 200) {
             this.message = 'Image uploaded successfully';
 

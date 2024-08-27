@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AppUser } from '../freelance/models/app-user';
 import { catchError, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../Entity/User';

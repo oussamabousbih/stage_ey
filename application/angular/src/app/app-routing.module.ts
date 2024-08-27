@@ -24,6 +24,8 @@ import {AddcategorybackComponent} from "./addcategoryback/addcategoryback.compon
 import {UpateCategoryComponent} from "./upate-category/upate-category.component";
 import {UpdateProductComponent} from "./update-product/update-product.component";
 import {UploadPhotoProduitComponent} from "./upload-photo-produit/upload-photo-produit.component";
+import {CartsComponent} from "./carts/carts.component";
+import {OrdersComponent} from "./orders/orders.component";
 
 const routes: Routes = [
   {
@@ -55,6 +57,7 @@ const routes: Routes = [
       {path: 'profileSetting',component: ProfileSettingComponent},
       {path:'product',component: ProductComponent},
       {path: 'category',component: CategoryComponent},
+      {path: 'cart',component: CartsComponent},
 
 
 
@@ -81,6 +84,7 @@ const routes: Routes = [
       {path:'updatecategory',component: UpateCategoryComponent},
       {path: 'updateproduct',component: UpdateProductComponent},
       {path:'upload',component: UploadPhotoProduitComponent},
+      {path: 'orders',component: OrdersComponent},
 
 
 

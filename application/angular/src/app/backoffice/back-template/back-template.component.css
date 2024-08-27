@@ -4,3 +4,23 @@
   border-radius: 50%; /* Makes the image round */
   overflow: hidden; /* Ensures the image stays within the rounded border */
 }
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content {
+  flex: 1;
+}
+
+.footer {
+  background-color: #fff; /* Customize as needed */
+  border-top: 1px solid #ddd; /* Optional: for a border on top of the footer */
+  padding: 10px; /* Adjust padding as needed */
+  text-align: center;
+}

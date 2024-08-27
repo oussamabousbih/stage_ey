@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Product} from "../Entity/Product";
 import {Category} from "../Entity/Category";
 import {ProduitCatServicesService} from "../Services/Produit-Category_Services/produit-cat-services.service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-upload-photo-produit',
   templateUrl: './upload-photo-produit.component.html',
   styleUrls: ['./upload-photo-produit.component.css']
 })
-export class UploadPhotoProduitComponent implements OnInit{
+export class UploadPhotoProduitComponent implements OnInit,OnDestroy{
 
   selectedFile!: File;
   product:Product=new Product();
@@ -19,14 +20,21 @@ export class UploadPhotoProduitComponent implements OnInit{
   selectedCategoryId!: number;
   successMessage: string = '';
   id:any
+  private routeSub!: Subscription;
+
 
   constructor(private productService: ProduitCatServicesService,private httpClient:HttpClient,private route:Router,private router:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.router.queryParams.subscribe(params => {
+    this.routeSub=this.router.queryParams.subscribe(params => {
       this.id = params['id'];
       // You can then use this.id in your component to perform further actions
     });
+  }
+  ngOnDestroy(): void {
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
   }
 
   navigate(){
@@ -48,6 +56,7 @@ export class UploadPhotoProduitComponent implements OnInit{
     //Make a call to the Spring Boot Application to save the image
     this.productService.uploadimage(uploadImageData,this.id)
     this.route.navigateByUrl("/backtemplate/produitback")
+
 
 
 

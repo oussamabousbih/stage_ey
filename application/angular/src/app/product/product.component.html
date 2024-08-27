@@ -1,9 +1,11 @@
-<!-- product-detail.component.html -->
-
 <div class="container">
+  <div class="row mb-4">
+    <div class="col-md-4 offset-md-4">
+      <input type="text" class="form-control" placeholder="Search products by name" [(ngModel)]="searchQuery" (ngModelChange)="onSearchQueryChange()" />
+    </div>
+  </div>
   <div class="row">
-
-    <div class="col-md-4 mb-4" *ngFor="let product of products| paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
+    <div class="col-md-4 mb-4" *ngFor="let product of filteredProducts | paginate: { itemsPerPage: pageSize, currentPage: currentPage }">
       <div class="card h-100 shadow-sm">
         <img
           *ngIf="productImages[product.id]"
@@ -17,7 +19,7 @@
           <p class="card-text text-truncate">{{ product.description }}</p>
           <p class="card-text text-center">Price: ${{ product.price }}</p>
           <div class="mt-auto text-center">
-            <a class="btn btn-primary w-100" (click)="addToCart(product)">Add to Cart</a>
+            <a class="btn btn-primary w-100" (click)="addToCart(product.id)">Add to Cart</a>
           </div>
         </div>
       </div>
@@ -28,3 +30,20 @@
   <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
 </div>
 
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Product added to cart successfully!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,15 +47,7 @@ export class ProfileComponent implements OnInit{
   }
   //Gets called when the user clicks on retieve image button to get the image from back end
   getImage(imagename :string) {
-    const token = localStorage.getItem('token'); // Retrieve token from storage
-
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8080/getimage/' + imagename,{headers})
+    this.service.loadImage(imagename)
       .subscribe(res => {
 
           this.retrieveResonse = res;
@@ -66,22 +58,14 @@ export class ProfileComponent implements OnInit{
   }
 
   onUpload(){
-    const token = localStorage.getItem('token'); // Retrieve token from storage
 
-    if (!token) {
-      throw new Error('No token found in local storage.');
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // Assuming the endpoint returns the URL of the uploaded image
-    console.log(this.selectedFile);
 
     //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
     //Make a call to the Spring Boot Application to save the image
+    this.service.uploadimage(uploadImageData)
 
-    this.httpClient.post('http://localhost:8080/upload-image', uploadImageData,{headers})
       .subscribe((response:any) => {
           if (response.status === 200) {
             this.message = 'Image uploaded successfully';

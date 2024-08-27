@@ -52,6 +52,8 @@ import { AddproductBackComponent } from './addproduct-back/addproduct-back.compo
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { UploadPhotoProduitComponent } from './upload-photo-produit/upload-photo-produit.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { CartsComponent } from './carts/carts.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -91,6 +93,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
      AddproductBackComponent,
      UpdateProductComponent,
      UploadPhotoProduitComponent,
+     CartsComponent,
+     OrdersComponent,
 
 
   ],

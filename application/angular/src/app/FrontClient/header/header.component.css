@@ -2,7 +2,11 @@
   width: 40px; /* Adjust to your desired width */
   height: 40px; /* Adjust to your desired height */
 }
-
+.cart-image {
+  width: 33px; /* Adjust to your desired width */
+  height: 33px; /* Adjust to your desired height */
+  object-fit: cover;
+}
 .container {
   position: relative;
   text-align: center;
