@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: springapp
-        image: oussama2306/spring:latest
+        image: oussama2306/spring:${BUILD_TAG}
         ports:
         - containerPort: 8080
         env:
