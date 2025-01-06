@@ -1,4 +1,5 @@
 package tn.esprit.stage_ey;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,16 +30,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductServiceTest {
 
     @Mock
-    private ProductRepository productRepository;
+    private ProductRepo productRepo;  // Corrected to ProductRepo
 
     @Mock
-    private CategoryRepository categoryRepository;
+    private CategoryRepo categoryRepo;  // Corrected to CategoryRepo
 
     @Mock
-    private ImageModelRepository imageModelRepository;
+    private ImageModelRepository imageModelRepository;  // Corrected to ImageModelRepository
 
     @InjectMocks
-    private ProductService productService;
+    private ProduitService productService;  // Corrected to ProduitService, assuming this is the service you're testing
 
     private Product productA;
     private Product productB;
@@ -76,59 +74,59 @@ class ProductServiceTest {
 
     @Test
     void testAddProduct() {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
-        when(productRepository.save(any(Product.class))).thenReturn(productA);
+        when(categoryRepo.findById(1L)).thenReturn(Optional.of(category));
+        when(productRepo.save(any(Product.class))).thenReturn(productA);
 
         Product result = productService.addProduct(productA, 1L);
 
         assertNotNull(result);
         assertEquals("Laptop", result.getName());
-        verify(categoryRepository, times(1)).findById(1L);
-        verify(productRepository, times(1)).save(productA);
+        verify(categoryRepo, times(1)).findById(1L);
+        verify(productRepo, times(1)).save(productA);
     }
 
     @Test
     void testGetProductById() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(productA));
+        when(productRepo.findById(1L)).thenReturn(Optional.of(productA));
 
         Product result = productService.getProductById(1L);
 
         assertNotNull(result);
         assertEquals("Laptop", result.getName());
-        verify(productRepository, times(1)).findById(1L);
+        verify(productRepo, times(1)).findById(1L);
     }
 
     @Test
     void testGetAllProducts() {
-        when(productRepository.findAll()).thenReturn(Arrays.asList(productA, productB));
+        when(productRepo.findAll()).thenReturn(Arrays.asList(productA, productB));
 
         List<Product> result = productService.getAllProducts();
 
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(productRepository, times(1)).findAll();
+        verify(productRepo, times(1)).findAll();
     }
 
     @Test
     void testDeleteProduct() {
-        doNothing().when(productRepository).deleteById(1L);
+        doNothing().when(productRepo).deleteById(1L);
 
         productService.deleteProduct(1L);
 
-        verify(productRepository, times(1)).deleteById(1L);
+        verify(productRepo, times(1)).deleteById(1L);
     }
 
     @Test
     void testGetProductsByCategoryId() {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
-        when(productRepository.findByCategoryId(1L)).thenReturn(Arrays.asList(productA, productB));
+        when(categoryRepo.findById(1L)).thenReturn(Optional.of(category));
+        when(productRepo.findByCategoryId(1L)).thenReturn(Arrays.asList(productA, productB));
 
         List<Product> result = productService.getProductsByCategoryId(1L);
 
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(categoryRepository, times(1)).findById(1L);
-        verify(productRepository, times(1)).findByCategoryId(1L);
+        verify(categoryRepo, times(1)).findById(1L);
+        verify(productRepo, times(1)).findByCategoryId(1L);
     }
 
     @Test
@@ -137,29 +135,29 @@ class ProductServiceTest {
         updatedDetails.setName("Updated Laptop");
         updatedDetails.setPrice(1300.0);
 
-        when(productRepository.findById(1L)).thenReturn(Optional.of(productA));
-        when(productRepository.save(any(Product.class))).thenReturn(updatedDetails);
+        when(productRepo.findById(1L)).thenReturn(Optional.of(productA));
+        when(productRepo.save(any(Product.class))).thenReturn(updatedDetails);
 
         Product result = productService.updateProduct(1L, updatedDetails);
 
         assertNotNull(result);
         assertEquals("Updated Laptop", result.getName());
-        verify(productRepository, times(1)).findById(1L);
-        verify(productRepository, times(1)).save(productA);
+        verify(productRepo, times(1)).findById(1L);
+        verify(productRepo, times(1)).save(productA);
     }
 
     @Test
     void testAssignImageToProduct() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(productA));
+        when(productRepo.findById(1L)).thenReturn(Optional.of(productA));
         when(imageModelRepository.findById(1L)).thenReturn(Optional.of(imageModel));
-        when(productRepository.save(any(Product.class))).thenReturn(productA);
+        when(productRepo.save(any(Product.class))).thenReturn(productA);
 
         productService.assignImageToProduct(1L, 1L);
 
         assertNotNull(productA.getImage());
         assertEquals("image.jpg", productA.getImage().getName());
-        verify(productRepository, times(1)).findById(1L);
+        verify(productRepo, times(1)).findById(1L);
         verify(imageModelRepository, times(1)).findById(1L);
-        verify(productRepository, times(1)).save(productA);
+        verify(productRepo, times(1)).save(productA);
     }
 }
