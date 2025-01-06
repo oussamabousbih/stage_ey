@@ -10,13 +10,18 @@ Configuration of a Kubernetes cluster for optimal resource management, deploying
 Enhancement of access point security with Spring Security and JWT, achieving a 100% success rate in penetration tests.
 ## Prerequisites
 - Docker
+- SonarQube
 - Kubernetes
 - Jenkins (optional, for CI/CD)
 
 ## Setup Instructions
 
 ### 1. Run the jenkinsfile in (myapplication/jenkinsfile) and change the necessery parameters
-it will run automatically all the commands needed to automate all the steps from build to test to deploy .
+it will run automatically all the commands needed to automate all the steps from build to test to deploy :
+-deployments 
+-services to expose the application
+-Persistent Volume and PVC
+-Dockerfiles 
 
 
 
