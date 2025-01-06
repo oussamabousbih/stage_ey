@@ -1,27 +1,42 @@
-# tanit-assignment
+# Tanit Assignment
 
 ## Overview
-Development of an e-commerce application using Spring Boot and Angular, followed by the implementation of an automated CI/CD pipeline with Jenkins, reducing manual interventions by 70% and accelerating deployment cycles by 50%.
 
-Creation of Dockerfiles for application containerization, with the implementation of a private Nexus registry for secure storage and image versioning, reducing environment setup time by 40%.
+This project involves the development of an **e-commerce application** using **Spring Boot** and **Angular**, coupled with the implementation of an automated CI/CD pipeline using **Jenkins**. 
 
-Configuration of a Kubernetes cluster for optimal resource management, deploying application components with secure communication between pods, while ensuring complete data persistence through Persistent Volumes.
+Key achievements include:  
+- **70% reduction in manual interventions** and **50% acceleration of deployment cycles** through automation.  
+- **Containerization** of applications using Docker, with a private Nexus registry for secure storage and versioning, reducing environment setup time by **40%**.  
+- **Kubernetes cluster configuration** for optimal resource management, ensuring secure communication between pods and full data persistence via Persistent Volumes.  
+- **Enhanced security** using **Spring Security** and **JWT**, achieving a **100% success rate in penetration tests**.
 
-Enhancement of access point security with Spring Security and JWT, achieving a 100% success rate in penetration tests.
+---
+
 ## Prerequisites
-- Docker
-- SonarQube
-- Kubernetes
-- Jenkins (optional, for CI/CD)
+
+Before running this project, ensure the following tools are installed:  
+- [Docker](https://www.docker.com/)  
+- [SonarQube](https://www.sonarqube.org/)  
+- [Kubernetes](https://kubernetes.io/)  
+- [Jenkins](https://www.jenkins.io/) (optional, for CI/CD)  
+
+---
 
 ## Setup Instructions
 
-### 1. Run the jenkinsfile in (myapplication/jenkinsfile) and change the necessery parameters
-it will run automatically all the commands needed to automate all the steps from build to test to deploy :
--deployments 
--services to expose the application
--Persistent Volume and PVC
--Dockerfiles 
+### Step 1: Execute the Jenkins Pipeline  
+1. Navigate to the **Jenkinsfile** located at `myapplication/jenkinsfile`.  
+2. Update the necessary parameters (e.g., Docker image names, Kubernetes configurations).  
+
+### Step 2: Automate the Workflow  
+Running the Jenkinsfile will automate the following steps:  
+- **Build, Test, and Deploy** the application.  
+- Create **Deployments** and **Services** to expose the application.  
+- Configure **Persistent Volumes (PV)** and **Persistent Volume Claims (PVC)** for data storage.  
+- Build and deploy the application containers using the provided **Dockerfiles**.  
+
+---
+
 
 
 
