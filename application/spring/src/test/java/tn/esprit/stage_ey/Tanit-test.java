@@ -30,16 +30,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductServiceTest {
 
     @Mock
-    private ProductRepo productRepo;  // Corrected to ProductRepo
+    private ProductRepo productRepo;
 
     @Mock
-    private CategoryRepo categoryRepo;  // Corrected to CategoryRepo
+    private CategoryRepo categoryRepo;
 
     @Mock
-    private ImageModelRepository imageModelRepository;  // Corrected to ImageModelRepository
+    private ImageModelRepository imageModelRepository;
 
     @InjectMocks
-    private ProduitService productService;  // Corrected to ProduitService, assuming this is the service you're testing
+    private ProductService productService;  // Ensure this matches your service class name
 
     private Product productA;
     private Product productB;
@@ -73,7 +73,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testAddProduct() {
+    void shouldAddProductWhenCategoryExists() {
         when(categoryRepo.findById(1L)).thenReturn(Optional.of(category));
         when(productRepo.save(any(Product.class))).thenReturn(productA);
 
@@ -86,7 +86,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testGetProductById() {
+    void shouldGetProductByIdWhenExists() {
         when(productRepo.findById(1L)).thenReturn(Optional.of(productA));
 
         Product result = productService.getProductById(1L);
@@ -97,7 +97,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testGetAllProducts() {
+    void shouldGetAllProducts() {
         when(productRepo.findAll()).thenReturn(Arrays.asList(productA, productB));
 
         List<Product> result = productService.getAllProducts();
@@ -108,7 +108,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testDeleteProduct() {
+    void shouldDeleteProductWhenExists() {
         doNothing().when(productRepo).deleteById(1L);
 
         productService.deleteProduct(1L);
@@ -117,7 +117,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testGetProductsByCategoryId() {
+    void shouldGetProductsByCategoryIdWhenCategoryExists() {
         when(categoryRepo.findById(1L)).thenReturn(Optional.of(category));
         when(productRepo.findByCategoryId(1L)).thenReturn(Arrays.asList(productA, productB));
 
@@ -130,7 +130,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testUpdateProduct() {
+    void shouldUpdateProductWhenExists() {
         Product updatedDetails = new Product();
         updatedDetails.setName("Updated Laptop");
         updatedDetails.setPrice(1300.0);
@@ -143,11 +143,11 @@ class ProductServiceTest {
         assertNotNull(result);
         assertEquals("Updated Laptop", result.getName());
         verify(productRepo, times(1)).findById(1L);
-        verify(productRepo, times(1)).save(productA);
+        verify(productRepo, times(1)).save(updatedDetails);  // Corrected to updatedDetails
     }
 
     @Test
-    void testAssignImageToProduct() {
+    void shouldAssignImageToProductWhenProductAndImageExist() {
         when(productRepo.findById(1L)).thenReturn(Optional.of(productA));
         when(imageModelRepository.findById(1L)).thenReturn(Optional.of(imageModel));
         when(productRepo.save(any(Product.class))).thenReturn(productA);
