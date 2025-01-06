@@ -12,8 +12,7 @@ environnements de 40 %.
  
  Configuration d’un cluster Kubernetes pour une gestion optimale des ressources, 
 avec le déploiement des composants applicatifs et une communication sécurisée 
-entre les pods, tout en assurant une persistance complète des données grâce aux 
-ConfigMaps et Persistent Volumes. 
+entre les pods, tout en assurant une persistance complète des données grâce aux Persistent Volumes. 
 
  
  Renforcement de la sécurité des points d’accès avec Spring Security et JWT, 
