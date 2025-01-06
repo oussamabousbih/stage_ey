@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
       - name: springapp
-        image: oussama2306/spring:${BUILD_TAG}
+        #image: oussama2306/spring:${BUILD_TAG}
+        # Note !!!!! :  i will use an existing container image because it will take long to push it to docker hub since i have low internet connection with better connection speed we use this commands to replace the actual image tag of the current build
+        image: oussama2306/spring:3
         ports:
         - containerPort: 8080
         env:
