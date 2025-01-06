@@ -126,6 +126,37 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			 <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <formats>
+                                <format>XML</format>
+                            </formats>
+                            <excludes>
+                                <exclude>**/control/**</exclude>
+                                <exclude>**/entity/**</exclude>
+                                <exclude>**/repository/**</exclude>
+                                <exclude>**/config/**</exclude>
+                            </excludes>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
