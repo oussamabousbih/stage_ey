@@ -120,8 +120,15 @@ pipeline {
                         sh "kubectl --kubeconfig=\$KUBECONFIG set image deployment/springapp springapp=your-docker-repo/spring:${env.BUILD_ID}"*/
 
                         // Apply Kubernetes deployment
-                         
-                           sh "kubectl  apply -f deployment_file.yaml --validate=false"
+
+
+                    sh 'kubectl apply -f /home/k8s/mysql-deployment.yaml '
+                     sh 'kubectl apply -f /home/k8s/mysql-service.yaml '
+                      sh 'kubectl apply -f mysql-pv.yaml'
+                     sh 'kubectl apply -f mysql-pvc.yaml'
+                    sh "kubectl  apply -f deployment_file.yaml --validate=false"
+                    sh 'kubectl apply -f /home/k8s/spring-boot-service.yaml'
+
                     }
                 }
             }
@@ -140,6 +147,7 @@ pipeline {
                         // Apply Kubernetes deployment
                        
                         sh "kubectl  apply -f deployment_file.yaml --validate=false"
+                     sh 'kubectl apply -f /home/k8s/my-angular-service.yaml '
                     }
                 }
             }
