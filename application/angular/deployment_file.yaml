@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: angular-frontend
+  name: angular-frontend-tanit
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: angular-frontend
+      app: angular-frontend-tanit
   template:
     metadata:
       labels:
-        app: angular-frontend
+        app: angular-frontend-tanit
     spec:
       containers:
-      - name: angular-frontend
+      - name: angular-frontend-tanit
       # Note !!!!! :  i will use an existing container image because it will take long to push it to docker hub since i have low internet connection with better connection speed we use this commands to replace the actual image tag of the current build
         #image: oussama2306/angular:${BUILD_TAG}
         image: oussama2306/angular:3
