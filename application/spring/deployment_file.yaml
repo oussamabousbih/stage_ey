@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springapp
+  name: springapp-tanit
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: springapp
+      app: springapp-tanit
   template:
     metadata:
       labels:
-        app: springapp
+        app: springapp-tanit
     spec:
       containers:
-      - name: springapp
+      - name: springapp-tanit
         #image: oussama2306/spring:${BUILD_TAG}
         # Note !!!!! :  i will use an existing container image because it will take long to push it to docker hub since i have low internet connection with better connection speed we use this commands to replace the actual image tag of the current build
         image: oussama2306/spring:3
