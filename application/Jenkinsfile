@@ -1,0 +1,157 @@
+pipeline {
+    agent any
+
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+            git branch: 'main', changelog: false, credentialsId: 'put your credentials !! ', poll: false, url: 'https://github.com/your-git-repo!!'                
+            }
+        }
+        stage('Compile Backend project ') {
+            steps {
+                dir('application/spring'){
+                    sh "mvn clean compile"
+                }
+                
+            }
+        }
+        stage('Test MOCKITO /JUnit') {
+            steps {
+                dir('application/spring'){
+            
+                sh "mvn jacoco:prepare-agent  test jacoco:report -X "
+                
+                sh " tree -L 4 "
+                }
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                dir('application/spring'){
+                     withSonarQubeEnv('Sonar') { 
+                        
+                            sh '''
+                           
+                                     mvn sonar:sonar  -Dsonar.projectKey=oussama_pipeline  -Dsonar.projectName=Tanit-Ai-Assignement
+                                   
+                                   
+                            '''
+                        
+                    }
+                }
+               
+            }
+        }
+        stage('Build Jar file  ') {
+            steps {
+                dir('application/spring'){//to build the jar file
+                    sh "mvn clean install  " 
+                }
+                
+            }
+        }
+        stage('Docker Build Image angular ') {
+            steps {
+                dir('application/angular'){//to build docker image
+                   script{
+  			withDockerRegistry(credentialsId: 'put your credentials !! ', toolName: 'docker_latest') {
+                               sh " docker build  -t yourdockerrepo/angular:${env.BUILD_ID} . "
+                            }
+                   }
+                   
+                }
+                
+            }
+        }
+        stage('Docker Build Image spring ') {
+            steps {
+                dir('application/spring'){//to build docker image
+                   script{
+  			withDockerRegistry(credentialsId: 'put your credentials', toolName: 'docker_latest') {
+                               sh " docker build  -t your-docker-repo/spring:${env.BUILD_ID} . "
+                            }
+                   }
+                   
+                }
+                
+            }
+        }
+        /* !!!!!!!!!!!!!!  Note : this is the commands to push the current docker image  to docker hub 
+        since i tested it and will take too long to push it i will use an existing docker images
+        that i pushed earlier when i had better internet connection
+        
+        stage('Docker Push Image Angular') {
+            steps {
+                dir('application/angular'){//to build docker image
+                   script{
+ 			 withDockerRegistry(credentialsId: 'put your credentials', toolName: 'docker_latest') {
+                               sh " docker push  your-docker-repo/angular:${env.BUILD_ID} "
+                            }
+                   }
+                   
+                }
+                
+            }
+        }
+        stage('Docker Push Image Spring ') {
+            steps {
+                dir('application/spring'){//to build docker image
+                   script{
+ 			 withDockerRegistry(credentialsId: 'put your credentials', toolName: 'docker_latest') {
+                               sh " docker push  your-docker-repo/spring:${env.BUILD_ID} "
+                            }
+                   }
+                   
+                }
+                
+            }
+        }*/
+        stage('Kubernetes Deploy Back ') {
+            steps {
+                withKubeConfig([credentialsId: 'put your credentials', serverUrl: 'https://your-k8s-ip-server']) {
+                    dir('application/spring') {
+                       /* Note !!!!!!!!!! : i will use an existing container image because it will take long to push it to docker hub
+                        since i have low internet connection with better connection speed
+                        we use this commands to replace the actual image tag of the current build*/
+                      /* sh '''
+                        sed "s|\\${BUILD_TAG}|${env.BUILD_ID}|g" deployment_file.yaml | kubectl apply -f -
+                    '''
+                        sh "kubectl --kubeconfig=\$KUBECONFIG set image deployment/springapp springapp=your-docker-repo/spring:${env.BUILD_ID}"*/
+
+                        // Apply Kubernetes deployment
+                         
+                           sh "kubectl  apply -f deployment_file.yaml --validate=false"
+                    }
+                }
+            }
+        }
+        stage('Kubernetes Deploy Front') {
+            steps {
+                withKubeConfig([credentialsId: 'put your credentials', serverUrl: 'https://your-k8s-ip-server']) {
+                    dir('application/angular') {
+                       /* Note !!!!! :  i will use an existing container image because it will take long to push it to docker hub
+                        since i have low internet connection with better connection speed
+                        we use this commands to replace the actual image tag of the current build*/
+                       /*sh '''
+                        sed "s|\\${BUILD_TAG}|${env.BUILD_ID}|g" deployment_file.yaml | kubectl apply -f -
+                    '''
+                    sh "kubectl --kubeconfig=\$KUBECONFIG set image deployment/angular-frontend angular-frontend=your-docker-repo/angular:${env.BUILD_ID}"*/
+                        // Apply Kubernetes deployment
+                       
+                        sh "kubectl  apply -f deployment_file.yaml --validate=false"
+                    }
+                }
+            }
+        }
+        stage('Show deployements and pods and nodes  ') {
+            steps {
+                withKubeConfig([credentialsId: 'put your credentials', serverUrl: 'https://your-k8s-ip-server']) {
+                    sh 'kubectl get deployments '
+                    sh 'kubectl get pods '
+                    sh 'kubectl get svc '
+                }
+            }
+        }
+    }
+}
