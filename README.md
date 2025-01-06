@@ -1,19 +1,22 @@
-# stage_ey
+# tanit-assignment
 
- Développement d’une application e-commerce avec Spring Boot et Angular, 
-suivi de la mise en place d’un pipeline CI/CD automatisé avec jenkins, réduisant 
-les interventions manuelles de 70 % et accélérant les cycles de déploiement de 
-50 %. 
- 
- Création de Dockerfiles pour la conteneurisation des applications, avec 
-l'implémentation d’un registre Nexus privé pour un stockage sécurisé et un 
-versioning des images, ce qui a réduit le temps de configuration des 
-environnements de 40 %. 
- 
- Configuration d’un cluster Kubernetes pour une gestion optimale des ressources, 
-avec le déploiement des composants applicatifs et une communication sécurisée 
-entre les pods, tout en assurant une persistance complète des données grâce aux Persistent Volumes. 
+## Overview
+Development of an e-commerce application using Spring Boot and Angular, followed by the implementation of an automated CI/CD pipeline with Jenkins, reducing manual interventions by 70% and accelerating deployment cycles by 50%.
 
- 
- Renforcement de la sécurité des points d’accès avec Spring Security et JWT, 
-avec un taux de réussite de 100 % lors des tests de pénétration. 
+Creation of Dockerfiles for application containerization, with the implementation of a private Nexus registry for secure storage and image versioning, reducing environment setup time by 40%.
+
+Configuration of a Kubernetes cluster for optimal resource management, deploying application components with secure communication between pods, while ensuring complete data persistence through Persistent Volumes.
+
+Enhancement of access point security with Spring Security and JWT, achieving a 100% success rate in penetration tests.
+## Prerequisites
+- Docker
+- Kubernetes
+- Jenkins (optional, for CI/CD)
+
+## Setup Instructions
+
+### 1. Run the jenkinsfile in (myapplication/jenkinsfile) and change the necessery parameters
+it will run automatically all the commands needed to automate all the steps from build to test to deploy .
+
+
+
