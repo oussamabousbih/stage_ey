@@ -25,8 +25,8 @@ Before running this project, ensure the following tools are installed:
 ## Setup Instructions
 
 ### Step 1: Execute the Jenkins Pipeline  
-1. Navigate to the **Jenkinsfile** located at `myapplication/jenkinsfile`.  
-2. Update the necessary parameters (e.g., Docker image names, Kubernetes configurations).  
+1. Navigate to the **Jenkinsfile** located at `application/jenkinsfile`.  
+2. Update the necessary parameters (e.g., Docker image names, Kubernetes configurations, git Repo ...).  
 
 ### Step 2: Automate the Workflow  
 Running the Jenkinsfile will automate the following steps:  
