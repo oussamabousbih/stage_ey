@@ -1,5 +1,16 @@
 package tn.esprit.stage_ey;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import tn.esprit.stage_ey.Entities.Category;
+import tn.esprit.stage_ey.Entities.ImageModel;
+import tn.esprit.stage_ey.Entities.Product;
+import tn.esprit.stage_ey.repository.CategoryRepo;
+import tn.esprit.stage_ey.repository.ImageModelRepository;
+import tn.esprit.stage_ey.repository.ProductRepo;
 
+import java.util.List;
+import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -14,14 +25,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import tn.esprit.stage_ey.Entities.Category;
-import tn.esprit.stage_ey.Entities.ImageModel;
-import tn.esprit.stage_ey.Entities.Product;
-import tn.esprit.stage_ey.Repository.CategoryRepository;
-import tn.esprit.stage_ey.Repository.ImageModelRepository;
-import tn.esprit.stage_ey.Repository.ProductRepository;
-import tn.esprit.stage_ey.Service.ProductService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
