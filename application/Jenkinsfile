@@ -77,9 +77,7 @@ pipeline {
                 
             }
         }
-        /* !!!!!!!!!!!!!!  Note : this is the commands to push the current docker image  to docker hub 
-        since i tested it and will take too long to push it i will use an existing docker images
-        that i pushed earlier when i had better internet connection
+       
         
         stage('Docker Push Image Angular') {
             steps {
@@ -106,14 +104,12 @@ pipeline {
                 }
                 
             }
-        }*/
+        }
         stage('Kubernetes Deploy Back ') {
             steps {
                 withKubeConfig([credentialsId: 'put your credentials', serverUrl: 'https://your-k8s-ip-server']) {
                     dir('application/spring') {
-                       /* Note !!!!!!!!!! : i will use an existing container image because it will take long to push it to docker hub
-                        since i have low internet connection with better connection speed
-                        we use this commands to replace the actual image tag of the current build*/
+                     
                       /* sh '''
                         sed "s|\\${BUILD_TAG}|${env.BUILD_ID}|g" deployment_file.yaml | kubectl apply -f -
                     '''
@@ -137,9 +133,7 @@ pipeline {
             steps {
                 withKubeConfig([credentialsId: 'put your credentials', serverUrl: 'https://your-k8s-ip-server']) {
                     dir('application/angular') {
-                       /* Note !!!!! :  i will use an existing container image because it will take long to push it to docker hub
-                        since i have low internet connection with better connection speed
-                        we use this commands to replace the actual image tag of the current build*/
+                     
                        /*sh '''
                         sed "s|\\${BUILD_TAG}|${env.BUILD_ID}|g" deployment_file.yaml | kubectl apply -f -
                     '''
